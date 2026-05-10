@@ -19,9 +19,9 @@ import {
   MessageCircle,
   Phone,
   Mail,
-  Instagram,
-  Facebook,
   ArrowRight,
+  Share2,
+  Globe2,
 } from "lucide-react";
 import logo from "@/assets/logo.png";
 import bikeTheft from "@/assets/bike-theft.jpg";
@@ -36,8 +36,8 @@ const waLink = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(
 
 const fadeUp = {
   hidden: { opacity: 0, y: 28 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
-};
+  show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: "easeOut" } },
+} as const;
 
 function Section({
   children,
@@ -736,11 +736,11 @@ function Footer() {
             <li><a href="#" className="hover:text-foreground">Refund Policy</a></li>
           </ul>
           <div className="mt-5 flex gap-3">
-            <a href="#" className="rounded-full border border-foreground/15 p-2 hover:bg-foreground/5">
-              <Instagram className="h-4 w-4" />
+            <a href="#" aria-label="Instagram" className="rounded-full border border-foreground/15 p-2 hover:bg-foreground/5">
+              <Share2 className="h-4 w-4" />
             </a>
-            <a href="#" className="rounded-full border border-foreground/15 p-2 hover:bg-foreground/5">
-              <Facebook className="h-4 w-4" />
+            <a href="#" aria-label="Website" className="rounded-full border border-foreground/15 p-2 hover:bg-foreground/5">
+              <Globe2 className="h-4 w-4" />
             </a>
           </div>
         </div>
