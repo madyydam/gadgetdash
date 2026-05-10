@@ -84,14 +84,10 @@ function StatCard({
   label: string;
 }) {
   return (
-    <div className="flex items-center gap-4 rounded-2xl bg-card/80 px-5 py-4 shadow-[var(--shadow-card)] ring-1 ring-foreground/5 backdrop-blur">
-      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-foreground/5">
-        <Icon className="h-5 w-5 text-foreground" />
-      </div>
-      <div className="leading-tight">
-        <div className="text-xl font-bold tracking-tight text-foreground">{value}</div>
-        <div className="text-xs text-muted-foreground">{label}</div>
-      </div>
+    <div className="flex flex-col items-start rounded-xl bg-card/80 px-3 py-2.5 shadow-[var(--shadow-card)] ring-1 ring-foreground/5 backdrop-blur">
+      <Icon className="h-3.5 w-3.5 text-foreground" />
+      <div className="mt-1 text-sm font-bold leading-none tracking-tight text-foreground">{value}</div>
+      <div className="mt-0.5 text-[10px] text-muted-foreground">{label}</div>
     </div>
   );
 }
@@ -99,9 +95,9 @@ function StatCard({
 function Navbar() {
   return (
     <header className="sticky top-0 z-50 border-b border-foreground/5 bg-background/70 backdrop-blur-xl">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 md:px-8">
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-2.5 md:px-8">
         <a href="#" className="flex items-center gap-2">
-          <img src={logo} alt="Gadget Dash" className="h-10 w-auto md:h-12" />
+          <img src={logo} alt="Gadget Dash" className="h-8 w-auto md:h-10" />
         </a>
         <nav className="hidden items-center gap-8 text-sm font-medium text-foreground/70 md:flex">
           <a href="#features" className="hover:text-foreground">Features</a>
