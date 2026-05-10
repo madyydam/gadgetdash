@@ -25,6 +25,7 @@ import {
 } from "lucide-react";
 import logo from "@/assets/logo.png";
 import bikeTheft from "@/assets/bike-theft.jpg";
+import heroBg from "@/assets/hero-bg.png";
 import deviceImg from "@/assets/theft-shield-device.jpg";
 import productPremium from "@/assets/product-premium.jpg";
 import productStandard from "@/assets/product-standard.jpg";
@@ -132,60 +133,63 @@ function Navbar() {
 function Hero() {
   return (
     <Section immediate className="relative overflow-hidden">
+      <div className="absolute inset-0 -z-20" style={{ background: "var(--gradient-beige)" }} />
+      {/* Hero background image — right-aligned on all screens */}
       <div
-        className="absolute inset-0 -z-10"
-        style={{ background: "var(--gradient-beige)" }}
+        className="absolute inset-0 -z-10 bg-no-repeat"
+        style={{
+          backgroundImage: `url(${heroBg})`,
+          backgroundPosition: "right center",
+          backgroundSize: "cover",
+        }}
       />
-      <div className="absolute inset-x-0 top-1/3 -z-10 mx-auto h-72 w-[60%] rounded-full bg-[oklch(0.85_0.05_70)]/40 blur-3xl" />
+      {/* Fade overlay so left side stays readable */}
+      <div className="absolute inset-0 -z-10 bg-gradient-to-r from-background via-background/85 to-transparent md:via-background/70" />
 
-      <div className="mx-auto max-w-7xl px-5 pb-24 pt-16 text-center md:px-8 md:pb-32 md:pt-24">
-        <motion.div variants={fadeUp} className="mx-auto mb-8 flex justify-center">
-          <img src={logo} alt="Gadget Dash by Suraj Ishwar" className="h-32 w-auto md:h-40" />
-        </motion.div>
-
-        <motion.h1
-          variants={fadeUp}
-          className="mx-auto max-w-4xl text-5xl font-black leading-[1.02] tracking-tight text-foreground md:text-7xl"
-        >
-          Stay One Step
-          <br />
-          Ahead of Thieves.
-        </motion.h1>
-
-        <motion.p
-          variants={fadeUp}
-          className="mx-auto mt-6 max-w-xl text-base text-muted-foreground md:text-lg"
-        >
-          The premium smart bike security system, engineered in India to detect, alert
-          and block — 24/7.
-        </motion.p>
-
-        <motion.div variants={fadeUp} className="mt-10 flex flex-wrap justify-center gap-3">
-          <a
-            href="#offer"
-            className="group inline-flex items-center gap-2 rounded-full bg-foreground px-7 py-4 text-sm font-semibold text-background shadow-[var(--shadow-soft)] transition hover:translate-y-[-1px]"
+      <div className="mx-auto grid max-w-7xl items-center gap-6 px-5 py-10 md:grid-cols-2 md:gap-8 md:px-8 md:py-16">
+        <div className="text-left">
+          <motion.h1
+            variants={fadeUp}
+            className="max-w-xl text-3xl font-black leading-[1.05] tracking-tight text-foreground sm:text-4xl md:text-5xl"
           >
-            Buy Now
-            <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" />
-          </a>
-          <a
-            href={waLink}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-2 rounded-full border border-foreground/20 bg-background/50 px-7 py-4 text-sm font-semibold text-foreground backdrop-blur transition hover:bg-foreground/5"
-          >
-            View Demo
-          </a>
-        </motion.div>
+            Stay One Step
+            <br />
+            Ahead of Thieves.
+          </motion.h1>
 
-        <motion.div
-          variants={fadeUp}
-          className="mx-auto mt-14 grid max-w-4xl gap-4 sm:grid-cols-3"
-        >
-          <StatCard icon={ShieldCheck} value="95%" label="theft risk reduction" />
-          <StatCard icon={Check} value="2-Year" label="warranty" />
-          <StatCard icon={Users} value="1,500+" label="riders protected" />
-        </motion.div>
+          <motion.p
+            variants={fadeUp}
+            className="mt-3 max-w-md text-sm text-muted-foreground md:text-base"
+          >
+            The premium smart bike security system, engineered in India to detect, alert
+            and block — 24/7.
+          </motion.p>
+
+          <motion.div variants={fadeUp} className="mt-5 flex flex-wrap gap-2">
+            <a
+              href="#offer"
+              className="group inline-flex items-center gap-2 rounded-full bg-foreground px-5 py-2.5 text-xs font-semibold text-background shadow-[var(--shadow-soft)] md:text-sm md:px-6 md:py-3"
+            >
+              Buy Now
+              <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-0.5" />
+            </a>
+            <a
+              href={waLink}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-2 rounded-full border border-foreground/20 bg-background/50 px-5 py-2.5 text-xs font-semibold text-foreground backdrop-blur md:text-sm md:px-6 md:py-3"
+            >
+              View Demo
+            </a>
+          </motion.div>
+
+          <motion.div variants={fadeUp} className="mt-6 grid max-w-md grid-cols-3 gap-2">
+            <StatCard icon={ShieldCheck} value="95%" label="risk down" />
+            <StatCard icon={Check} value="2-Yr" label="warranty" />
+            <StatCard icon={Users} value="1,500+" label="riders" />
+          </motion.div>
+        </div>
+        <div className="hidden md:block" />
       </div>
     </Section>
   );
