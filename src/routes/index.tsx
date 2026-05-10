@@ -1,26 +1,25 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { LandingPage } from "@/components/landing/LandingPage";
 
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "Gadget Dash — Theft Shield by Suraj Ishwar" },
+      {
+        name: "description",
+        content:
+          "Premium smart bike security system. Real-time tracking, instant alerts, engine lock and tamper detection. Stay one step ahead of thieves.",
+      },
+      { property: "og:title", content: "Gadget Dash — Theft Shield" },
+      {
+        property: "og:description",
+        content: "Premium smart bike security. 95% theft risk reduction, 2-year warranty, trusted by 1,500+ riders.",
+      },
+    ],
+  }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. For sites with multiple pages (About, Services, Contact, etc.),
-// create separate route files (about.tsx, services.tsx, contact.tsx) — don't put all pages in this file.
-function PlaceholderIndex() {
-  return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
-  );
-}
-
 function Index() {
-  return <PlaceholderIndex />;
+  return <LandingPage />;
 }
