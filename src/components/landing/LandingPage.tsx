@@ -43,17 +43,20 @@ function Section({
   children,
   className = "",
   id,
+  immediate = false,
 }: {
   children: React.ReactNode;
   className?: string;
   id?: string;
+  immediate?: boolean;
 }) {
   return (
     <motion.section
       id={id}
       initial="hidden"
-      whileInView="show"
-      viewport={{ once: true, amount: 0.15 }}
+      {...(immediate
+        ? { animate: "show" }
+        : { whileInView: "show", viewport: { once: true, amount: 0.1 } })}
       variants={fadeUp}
       className={className}
     >
@@ -128,7 +131,7 @@ function Navbar() {
 
 function Hero() {
   return (
-    <Section className="relative overflow-hidden">
+    <Section immediate className="relative overflow-hidden">
       <div
         className="absolute inset-0 -z-10"
         style={{ background: "var(--gradient-beige)" }}
