@@ -171,21 +171,21 @@ export function Navbar() {
             </div>
 
             {/* 3. Footer Actions (Fixed Height) */}
-            <div className="shrink-0 border-t border-foreground/10 bg-white p-6 shadow-[0_-10px_30px_rgba(0,0,0,0.03)]">
-              <div className="flex flex-col gap-3">
+            <div className="shrink-0 border-t border-foreground/10 bg-white p-4 shadow-[0_-10px_30px_rgba(0,0,0,0.03)]">
+              <div className="flex flex-row gap-2">
                 <Link
                   to="/contact"
                   onClick={() => setIsOpen(false)}
-                  className="flex items-center justify-center gap-3 rounded-2xl border-2 border-foreground py-5 text-[11px] font-black uppercase tracking-[0.3em] text-foreground"
+                  className="flex flex-1 items-center justify-center gap-2 rounded-xl border-2 border-foreground py-4 text-[9px] font-black uppercase tracking-[0.2em] text-foreground"
                 >
-                  <MessageCircle className="h-5 w-5" /> Contact Us
+                  <MessageCircle className="h-4 w-4" /> Contact
                 </Link>
                 <Link
                   to="/shop"
                   onClick={() => setIsOpen(false)}
-                  className="flex items-center justify-center gap-3 rounded-2xl bg-foreground py-5 text-[11px] font-black uppercase tracking-[0.3em] text-background shadow-lg"
+                  className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-foreground py-4 text-[9px] font-black uppercase tracking-[0.2em] text-background shadow-lg"
                 >
-                  <ShoppingBag className="h-5 w-5" /> Shop Now
+                  <ShoppingBag className="h-4 w-4" /> Shop Now
                 </Link>
               </div>
             </div>
