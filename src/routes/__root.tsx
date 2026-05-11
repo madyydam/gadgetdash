@@ -80,13 +80,13 @@ function DoorReveal() {
       <motion.div
         initial={{ x: 0 }}
         animate={{ x: "-100%" }}
-        transition={{ duration: 0.8, delay: 0.5, ease: [0.65, 0, 0.35, 1] }}
+        transition={{ duration: 1.5, delay: 0.8, ease: [0.65, 0, 0.35, 1] }}
         className="h-full w-1/2 bg-foreground pointer-events-auto"
       />
       <motion.div
         initial={{ x: 0 }}
         animate={{ x: "100%" }}
-        transition={{ duration: 0.8, delay: 0.5, ease: [0.65, 0, 0.35, 1] }}
+        transition={{ duration: 1.5, delay: 0.8, ease: [0.65, 0, 0.35, 1] }}
         className="h-full w-1/2 bg-foreground pointer-events-auto"
       />
       
@@ -121,7 +121,7 @@ function RootComponent() {
     document.body.style.overflow = "hidden";
     const timer = setTimeout(() => {
       setIsFirstLoad(false);
-    }, 2000); // Wait for door animation to finish
+    }, 3000); // Wait for door animation to finish
     return () => clearTimeout(timer);
   }, []);
 
