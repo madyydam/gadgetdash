@@ -9,38 +9,228 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as WarrantyRouteImport } from './routes/warranty'
+import { Route as TermsRouteImport } from './routes/terms'
+import { Route as ShopRouteImport } from './routes/shop'
+import { Route as OurServicesRouteImport } from './routes/our-services'
+import { Route as InternshipRouteImport } from './routes/internship'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as CompanyRouteImport } from './routes/company'
+import { Route as AdvertisementsRouteImport } from './routes/advertisements'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as JobsIndexRouteImport } from './routes/jobs.index'
+import { Route as JobsSalesExecutiveRouteImport } from './routes/jobs.sales-executive'
 
+const WarrantyRoute = WarrantyRouteImport.update({
+  id: '/warranty',
+  path: '/warranty',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ShopRoute = ShopRouteImport.update({
+  id: '/shop',
+  path: '/shop',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OurServicesRoute = OurServicesRouteImport.update({
+  id: '/our-services',
+  path: '/our-services',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InternshipRoute = InternshipRouteImport.update({
+  id: '/internship',
+  path: '/internship',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CompanyRoute = CompanyRouteImport.update({
+  id: '/company',
+  path: '/company',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdvertisementsRoute = AdvertisementsRouteImport.update({
+  id: '/advertisements',
+  path: '/advertisements',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const JobsIndexRoute = JobsIndexRouteImport.update({
+  id: '/jobs/',
+  path: '/jobs/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JobsSalesExecutiveRoute = JobsSalesExecutiveRouteImport.update({
+  id: '/jobs/sales-executive',
+  path: '/jobs/sales-executive',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/advertisements': typeof AdvertisementsRoute
+  '/company': typeof CompanyRoute
+  '/contact': typeof ContactRoute
+  '/internship': typeof InternshipRoute
+  '/our-services': typeof OurServicesRoute
+  '/shop': typeof ShopRoute
+  '/terms': typeof TermsRoute
+  '/warranty': typeof WarrantyRoute
+  '/jobs/sales-executive': typeof JobsSalesExecutiveRoute
+  '/jobs/': typeof JobsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/advertisements': typeof AdvertisementsRoute
+  '/company': typeof CompanyRoute
+  '/contact': typeof ContactRoute
+  '/internship': typeof InternshipRoute
+  '/our-services': typeof OurServicesRoute
+  '/shop': typeof ShopRoute
+  '/terms': typeof TermsRoute
+  '/warranty': typeof WarrantyRoute
+  '/jobs/sales-executive': typeof JobsSalesExecutiveRoute
+  '/jobs': typeof JobsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/advertisements': typeof AdvertisementsRoute
+  '/company': typeof CompanyRoute
+  '/contact': typeof ContactRoute
+  '/internship': typeof InternshipRoute
+  '/our-services': typeof OurServicesRoute
+  '/shop': typeof ShopRoute
+  '/terms': typeof TermsRoute
+  '/warranty': typeof WarrantyRoute
+  '/jobs/sales-executive': typeof JobsSalesExecutiveRoute
+  '/jobs/': typeof JobsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/advertisements'
+    | '/company'
+    | '/contact'
+    | '/internship'
+    | '/our-services'
+    | '/shop'
+    | '/terms'
+    | '/warranty'
+    | '/jobs/sales-executive'
+    | '/jobs/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/advertisements'
+    | '/company'
+    | '/contact'
+    | '/internship'
+    | '/our-services'
+    | '/shop'
+    | '/terms'
+    | '/warranty'
+    | '/jobs/sales-executive'
+    | '/jobs'
+  id:
+    | '__root__'
+    | '/'
+    | '/advertisements'
+    | '/company'
+    | '/contact'
+    | '/internship'
+    | '/our-services'
+    | '/shop'
+    | '/terms'
+    | '/warranty'
+    | '/jobs/sales-executive'
+    | '/jobs/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdvertisementsRoute: typeof AdvertisementsRoute
+  CompanyRoute: typeof CompanyRoute
+  ContactRoute: typeof ContactRoute
+  InternshipRoute: typeof InternshipRoute
+  OurServicesRoute: typeof OurServicesRoute
+  ShopRoute: typeof ShopRoute
+  TermsRoute: typeof TermsRoute
+  WarrantyRoute: typeof WarrantyRoute
+  JobsSalesExecutiveRoute: typeof JobsSalesExecutiveRoute
+  JobsIndexRoute: typeof JobsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/warranty': {
+      id: '/warranty'
+      path: '/warranty'
+      fullPath: '/warranty'
+      preLoaderRoute: typeof WarrantyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/shop': {
+      id: '/shop'
+      path: '/shop'
+      fullPath: '/shop'
+      preLoaderRoute: typeof ShopRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/our-services': {
+      id: '/our-services'
+      path: '/our-services'
+      fullPath: '/our-services'
+      preLoaderRoute: typeof OurServicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/internship': {
+      id: '/internship'
+      path: '/internship'
+      fullPath: '/internship'
+      preLoaderRoute: typeof InternshipRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/company': {
+      id: '/company'
+      path: '/company'
+      fullPath: '/company'
+      preLoaderRoute: typeof CompanyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/advertisements': {
+      id: '/advertisements'
+      path: '/advertisements'
+      fullPath: '/advertisements'
+      preLoaderRoute: typeof AdvertisementsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,12 +238,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/jobs/': {
+      id: '/jobs/'
+      path: '/jobs'
+      fullPath: '/jobs/'
+      preLoaderRoute: typeof JobsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/jobs/sales-executive': {
+      id: '/jobs/sales-executive'
+      path: '/jobs/sales-executive'
+      fullPath: '/jobs/sales-executive'
+      preLoaderRoute: typeof JobsSalesExecutiveRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdvertisementsRoute: AdvertisementsRoute,
+  CompanyRoute: CompanyRoute,
+  ContactRoute: ContactRoute,
+  InternshipRoute: InternshipRoute,
+  OurServicesRoute: OurServicesRoute,
+  ShopRoute: ShopRoute,
+  TermsRoute: TermsRoute,
+  WarrantyRoute: WarrantyRoute,
+  JobsSalesExecutiveRoute: JobsSalesExecutiveRoute,
+  JobsIndexRoute: JobsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

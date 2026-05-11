@@ -6,7 +6,10 @@ import {
   useRouter,
   HeadContent,
   Scripts,
+  useLocation,
 } from "@tanstack/react-router";
+import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect } from "react";
 
 import appCss from "../styles.css?url";
 
@@ -67,6 +70,45 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   );
 }
 
+function DoorReveal() {
+  return (
+    <motion.div
+      initial={{ opacity: 1 }}
+      animate={{ opacity: 0 }}
+      transition={{ duration: 0.1, delay: 1.2 }}
+      onAnimationComplete={() => {
+        document.body.style.overflow = "auto";
+      }}
+      className="fixed inset-0 z-[9999] flex pointer-events-none"
+    >
+      <motion.div
+        initial={{ x: 0 }}
+        animate={{ x: "-100%" }}
+        transition={{ duration: 0.8, delay: 0.5, ease: [0.65, 0, 0.35, 1] }}
+        className="h-full w-1/2 bg-foreground pointer-events-auto"
+      />
+      <motion.div
+        initial={{ x: 0 }}
+        animate={{ x: "100%" }}
+        transition={{ duration: 0.8, delay: 0.5, ease: [0.65, 0, 0.35, 1] }}
+        className="h-full w-1/2 bg-foreground pointer-events-auto"
+      />
+      
+      {/* Center Logo/Icon during door opening */}
+      <motion.div
+        initial={{ opacity: 1, scale: 1 }}
+        animate={{ opacity: 0, scale: 0.8 }}
+        transition={{ duration: 0.4, delay: 0.4 }}
+        className="absolute inset-0 flex items-center justify-center"
+      >
+        <div className="text-background text-2xl font-black tracking-tighter uppercase">
+          Gadget Dash
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+}
+
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   head: () => ({
     meta: [
@@ -93,6 +135,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@500;700;900&display=swap",
       },
     ],
+    scripts: [
+      {
+        id: "omnidimension-web-widget",
+        async: true,
+        src: "https://omnidim.io/web_widget.js?secret_key=634600e38c77ecfc81ac5ad9453c46f9",
+      },
+    ],
   }),
   shellComponent: RootShell,
   component: RootComponent,
@@ -116,10 +165,35 @@ function RootShell({ children }: { children: React.ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const location = useLocation();
+  const [isFirstLoad, setIsFirstLoad] = useState(true);
+
+  useEffect(() => {
+    // Disable scroll during door animation
+    document.body.style.overflow = "hidden";
+    const timer = setTimeout(() => {
+      setIsFirstLoad(false);
+    }, 2000); // Wait for door animation to finish
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Outlet />
+      <AnimatePresence>
+        {isFirstLoad && <DoorReveal key="door-reveal" />}
+      </AnimatePresence>
+      
+      <AnimatePresence mode="wait" initial={false}>
+        <motion.div
+          key={location.pathname}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -10 }}
+          transition={{ duration: 0.3, ease: "easeOut" }}
+        >
+          <Outlet />
+        </motion.div>
+      </AnimatePresence>
     </QueryClientProvider>
   );
 }

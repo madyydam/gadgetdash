@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Link } from "@tanstack/react-router";
 import {
   ShieldCheck,
   BellRing,
@@ -17,176 +18,108 @@ import {
   X,
   Gift,
   MessageCircle,
-  Phone,
-  Mail,
   ArrowRight,
-  Share2,
-  Globe2,
 } from "lucide-react";
-import logo from "@/assets/logo.png";
-import bikeTheft from "@/assets/bike-theft.jpg";
 import heroBg from "@/assets/hero-bg.png";
 import deviceImg from "@/assets/theft-shield-device.jpg";
 import productPremium from "@/assets/product-premium.jpg";
 import productStandard from "@/assets/product-standard.jpg";
+import bikeTheftNew from "@/assets/bike-theft-new.png";
+
+import { Navbar } from "@/components/layout/Navbar";
+import { Footer } from "@/components/layout/Footer";
+import { MobileStickyCTA } from "@/components/layout/MobileStickyCTA";
+import { Section, Tag, StatCard, fadeUp } from "@/components/common/UI";
 
 const WHATSAPP = "918698521649";
 const waLink = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(
   "Hi! I want to know more about Gadget Dash Theft Shield."
 )}`;
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 28 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: "easeOut" } },
+const slowFadeUp = {
+  hidden: { opacity: 0, y: 30 },
+  show: { opacity: 1, y: 0, transition: { duration: 1.2, ease: [0.22, 1, 0.36, 1] } },
 } as const;
 
-function Section({
-  children,
-  className = "",
-  id,
-  immediate = false,
-}: {
-  children: React.ReactNode;
-  className?: string;
-  id?: string;
-  immediate?: boolean;
-}) {
-  return (
-    <motion.section
-      id={id}
-      initial="hidden"
-      {...(immediate
-        ? { animate: "show" }
-        : { whileInView: "show", viewport: { once: true, amount: 0.1 } })}
-      variants={fadeUp}
-      className={className}
-    >
-      {children}
-    </motion.section>
-  );
-}
-
-function Tag({ children }: { children: React.ReactNode }) {
-  return (
-    <span className="inline-flex items-center rounded-full border border-foreground/15 bg-background/60 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-foreground/80 backdrop-blur">
-      {children}
-    </span>
-  );
-}
-
-function StatCard({
-  icon: Icon,
-  value,
-  label,
-}: {
-  icon: React.ComponentType<{ className?: string }>;
-  value: string;
-  label: string;
-}) {
-  return (
-    <div className="flex flex-col items-start rounded-xl bg-card/80 px-3 py-2.5 shadow-[var(--shadow-card)] ring-1 ring-foreground/5 backdrop-blur">
-      <Icon className="h-3.5 w-3.5 text-foreground" />
-      <div className="mt-1 text-sm font-bold leading-none tracking-tight text-foreground">{value}</div>
-      <div className="mt-0.5 text-[10px] text-muted-foreground">{label}</div>
-    </div>
-  );
-}
-
-function Navbar() {
-  return (
-    <header className="sticky top-0 z-50 border-b border-foreground/5 bg-background/70 backdrop-blur-xl">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-2.5 md:px-8">
-        <a href="#" className="flex items-center gap-2">
-          <img src={logo} alt="Gadget Dash" className="h-8 w-auto md:h-10" />
-        </a>
-        <nav className="hidden items-center gap-8 text-sm font-medium text-foreground/70 md:flex">
-          <a href="#features" className="hover:text-foreground">Features</a>
-          <a href="#compare" className="hover:text-foreground">Compare</a>
-          <a href="#reviews" className="hover:text-foreground">Reviews</a>
-          <a href="#offer" className="hover:text-foreground">Offer</a>
-        </nav>
-        <div className="flex items-center gap-2 md:gap-3">
-          <a
-            href={waLink}
-            target="_blank"
-            rel="noreferrer"
-            className="hidden rounded-full border border-foreground/15 px-5 py-2.5 text-sm font-medium text-foreground transition hover:bg-foreground/5 sm:inline-flex"
-          >
-            View Demo
-          </a>
-          <a
-            href="#offer"
-            className="rounded-full bg-foreground px-5 py-2.5 text-sm font-semibold text-background transition hover:opacity-90"
-          >
-            Buy Now
-          </a>
-        </div>
-      </div>
-    </header>
-  );
-}
+const slowStagger = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.2,
+      delayChildren: 0.3,
+    },
+  },
+} as const;
 
 function Hero() {
   return (
-    <Section immediate className="relative overflow-hidden">
-      <div className="absolute inset-0 -z-20" style={{ background: "var(--gradient-beige)" }} />
-      {/* Hero background image — right-aligned on all screens */}
-      <div
-        className="absolute inset-0 -z-10 bg-no-repeat"
-        style={{
-          backgroundImage: `url(${heroBg})`,
-          backgroundPosition: "right center",
-          backgroundSize: "cover",
-        }}
+    <Section immediate stagger className="relative overflow-hidden min-h-[550px] flex items-center bg-background">
+      {/* Hero background image with slow zoom */}
+      <motion.img
+        src={heroBg}
+        alt="Hero Background"
+        initial={{ scale: 1.1, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ duration: 2.5, ease: "easeOut" }}
+        className="absolute inset-0 z-0 h-full w-full object-left object-cover md:object-right"
       />
-      {/* Fade overlay so left side stays readable */}
-      <div className="absolute inset-0 -z-10 bg-gradient-to-r from-background via-background/85 to-transparent md:via-background/70" />
+      {/* Very light gradient only on the left for text contrast */}
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1.5, delay: 0.5 }}
+        className="absolute inset-0 z-10 bg-gradient-to-r from-background/40 via-transparent to-transparent md:from-background/60" 
+      />
 
-      <div className="mx-auto grid max-w-7xl items-center gap-6 px-5 py-10 md:grid-cols-2 md:gap-8 md:px-8 md:py-16">
+      <motion.div 
+        variants={slowStagger}
+        initial="hidden"
+        animate="show"
+        className="relative z-20 mx-auto grid max-w-[1440px] items-center gap-8 px-6 py-12 md:grid-cols-2 md:gap-10 md:px-10 md:py-20"
+      >
         <div className="text-left">
           <motion.h1
-            variants={fadeUp}
-            className="max-w-xl text-3xl font-black leading-[1.05] tracking-tight text-foreground sm:text-4xl md:text-5xl"
+            variants={slowFadeUp}
+            className="max-w-3xl text-3xl font-black leading-[1.05] tracking-tight text-foreground sm:text-4xl md:text-5xl"
           >
-            Stay One Step
-            <br />
-            Ahead of Thieves.
+            Stay One Step Ahead of Thieves.
           </motion.h1>
 
           <motion.p
-            variants={fadeUp}
-            className="mt-3 max-w-md text-sm text-muted-foreground md:text-base"
+            variants={slowFadeUp}
+            className="mt-4 max-w-md text-sm text-muted-foreground md:text-lg"
           >
             The premium smart bike security system, engineered in India to detect, alert
             and block — 24/7.
           </motion.p>
 
-          <motion.div variants={fadeUp} className="mt-5 flex flex-wrap gap-2">
-            <a
+          <motion.div variants={slowFadeUp} className="mt-6 flex flex-wrap gap-3">
+            <motion.a
               href="#offer"
-              className="group inline-flex items-center gap-2 rounded-full bg-foreground px-5 py-2.5 text-xs font-semibold text-background shadow-[var(--shadow-soft)] md:text-sm md:px-6 md:py-3"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="group inline-flex items-center gap-2.5 rounded-full bg-foreground px-6 py-3 text-xs font-semibold text-background shadow-[var(--shadow-soft)] md:text-sm md:px-7 md:py-3.5"
             >
               Buy Now
-              <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-0.5" />
-            </a>
-            <a
-              href={waLink}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-2 rounded-full border border-foreground/20 bg-background/50 px-5 py-2.5 text-xs font-semibold text-foreground backdrop-blur md:text-sm md:px-6 md:py-3"
+              <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-1" />
+            </motion.a>
+            <Link
+              to="/contact"
+              className="inline-flex items-center gap-2.5 rounded-full border border-foreground/20 bg-background/50 px-6 py-3 text-xs font-semibold text-foreground backdrop-blur md:text-sm md:px-7 md:py-3.5 hover:bg-foreground/5 transition-colors"
             >
-              View Demo
-            </a>
+              Contact Us
+            </Link>
           </motion.div>
 
-          <motion.div variants={fadeUp} className="mt-6 grid max-w-md grid-cols-3 gap-2">
+          <motion.div variants={slowFadeUp} className="mt-8 grid max-w-sm grid-cols-3 gap-3">
             <StatCard icon={ShieldCheck} value="95%" label="risk down" />
             <StatCard icon={Check} value="2-Yr" label="warranty" />
             <StatCard icon={Users} value="1,500+" label="riders" />
           </motion.div>
         </div>
         <div className="hidden md:block" />
-      </div>
+      </motion.div>
     </Section>
   );
 }
@@ -200,22 +133,22 @@ const TRUST = [
 
 function TrustStrip() {
   return (
-    <Section className="border-y border-foreground/5 bg-card/60">
-      <div className="mx-auto max-w-6xl px-5 py-8 md:px-8 md:py-10">
-        <p className="text-center text-xs font-semibold uppercase tracking-[0.2em] text-foreground/80">
+    <Section stagger className="border-y border-foreground/5 bg-card/60">
+      <div className="mx-auto max-w-[1440px] px-6 py-10 md:px-10 md:py-14">
+        <motion.p variants={fadeUp} className="text-center text-[10px] font-semibold uppercase tracking-[0.2em] text-foreground/80">
           Trusted, Certified, and Built for India
-        </p>
-        <div className="mx-auto mt-2 h-px w-10 bg-foreground/20" />
-        <div className="mt-6 grid grid-cols-4 gap-4">
+        </motion.p>
+        <motion.div variants={fadeUp} className="mx-auto mt-2 h-px w-8 bg-foreground/20" />
+        <div className="mt-8 grid grid-cols-4 gap-4 md:gap-6">
           {TRUST.map(({ icon: Icon, label }) => (
-            <div key={label} className="flex flex-col items-center text-center">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full border border-foreground/15 bg-background md:h-12 md:w-12">
-                <Icon className="h-4 w-4 text-foreground md:h-5 md:w-5" />
+            <motion.div key={label} variants={fadeUp} className="flex flex-col items-center text-center">
+              <div className="flex h-10 w-10 items-center justify-center rounded-full border border-foreground/15 bg-background md:h-14 md:w-14">
+                <Icon className="h-4 w-4 text-foreground md:h-6 md:w-6" />
               </div>
               <div className="mt-2 whitespace-pre-line text-[10px] font-medium leading-tight text-foreground/80 md:text-xs">
                 {label}
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
@@ -225,49 +158,49 @@ function TrustStrip() {
 
 function ProblemSection() {
   return (
-    <Section className="relative">
-      <div className="mx-auto grid max-w-7xl gap-6 px-5 py-12 md:grid-cols-2 md:gap-12 md:px-8 md:py-16">
+    <Section stagger className="relative">
+      <div className="mx-auto grid max-w-[1440px] gap-8 px-6 py-16 md:grid-cols-2 md:gap-12 md:px-10 md:py-20">
         <div className="flex flex-col justify-center">
-          <Tag>The Reality</Tag>
-          <h2 className="mt-3 text-2xl font-black leading-[1.05] tracking-tight md:text-4xl">
+          <Tag className="scale-90 origin-left">The Reality</Tag>
+          <motion.h2 variants={fadeUp} className="mt-4 text-2xl font-black leading-[1.05] tracking-tight md:text-4xl">
             Bike Theft is a<br />Real Problem.
-          </h2>
-          <p className="mt-3 max-w-md text-sm text-muted-foreground md:text-base">
+          </motion.h2>
+          <motion.p variants={fadeUp} className="mt-4 max-w-lg text-sm text-muted-foreground md:text-base">
             Every day, thousands of riders across India lose more than just a vehicle.
             They lose their daily livelihood, savings, and peace of mind.
-          </p>
-          <div className="mt-4 h-px w-8 bg-foreground/30" />
-          <p className="mt-3 text-sm font-semibold text-foreground md:text-base">
+          </motion.p>
+          <motion.div variants={fadeUp} className="mt-4 h-px w-8 bg-foreground/30" />
+          <motion.p variants={fadeUp} className="mt-4 text-sm font-semibold text-foreground md:text-lg">
             Don't be the next statistic.<br />Protect what's yours.
-          </p>
+          </motion.p>
         </div>
-        <div className="relative aspect-[16/10] overflow-hidden rounded-2xl shadow-[var(--shadow-soft)] md:aspect-auto">
+        <motion.div variants={fadeUp} className="relative aspect-[16/10] overflow-hidden rounded-2xl shadow-[var(--shadow-soft)] md:aspect-auto">
           <img
-            src={bikeTheft}
+            src={bikeTheftNew}
             alt="Hooded thief stealing a bike at night"
             loading="lazy"
             className="absolute inset-0 h-full w-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-background/40 via-transparent to-transparent" />
-        </div>
+          <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-transparent to-transparent" />
+        </motion.div>
       </div>
 
-      <div className="mx-auto max-w-7xl px-5 pb-12 md:px-8">
-        <div className="grid grid-cols-3 gap-2 rounded-2xl bg-card/80 p-2 shadow-[var(--shadow-card)] ring-1 ring-foreground/5 backdrop-blur sm:divide-x sm:divide-foreground/10">
+      <div className="mx-auto max-w-[1440px] px-6 pb-16 md:px-10">
+        <div className="grid grid-cols-3 gap-2 rounded-2xl bg-card/80 p-3 shadow-[var(--shadow-card)] ring-1 ring-foreground/5 backdrop-blur sm:divide-x sm:divide-foreground/10">
           {[
             { icon: Radar, value: "1,800+", label: "Bike thefts in Pune (yearly)" },
             { icon: Building2, value: "13,000+", label: "Bike thefts in Bengaluru (yearly)" },
             { icon: ShieldCheck, value: "<20%", label: "National recovery rate" },
           ].map((s) => (
-            <div key={s.label} className="flex items-center gap-2 px-2 py-2 sm:px-4">
-              <div className="hidden h-9 w-9 items-center justify-center rounded-lg bg-foreground/5 sm:flex">
+            <motion.div key={s.label} variants={fadeUp} className="flex items-center gap-3 px-3 py-3 sm:px-6">
+              <div className="hidden h-10 w-10 items-center justify-center rounded-lg bg-foreground/5 sm:flex">
                 <s.icon className="h-4 w-4" />
               </div>
               <div>
-                <div className="text-base font-bold tracking-tight md:text-xl">{s.value}</div>
+                <div className="text-lg font-bold tracking-tight md:text-xl">{s.value}</div>
                 <div className="text-[10px] leading-tight text-muted-foreground md:text-xs">{s.label}</div>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
@@ -282,36 +215,36 @@ function SolutionSection() {
     { icon: ShieldCheck, label: "Tamper\nDetection" },
   ];
   return (
-    <Section className="relative overflow-hidden bg-[var(--dark-bg)] text-[oklch(0.97_0.01_80)]">
-      <div className="absolute inset-x-0 top-0 -z-0 mx-auto h-72 w-[60%] rounded-full bg-[oklch(0.45_0.05_75)]/30 blur-3xl" />
-      <div className="relative mx-auto grid max-w-7xl gap-6 px-5 py-12 md:grid-cols-2 md:gap-12 md:px-8 md:py-16">
+    <Section stagger className="relative overflow-hidden bg-[var(--dark-bg)] text-[oklch(0.97_0.01_80)]">
+      <div className="absolute inset-x-0 top-0 -z-0 mx-auto h-80 w-[60%] rounded-full bg-[oklch(0.45_0.05_75)]/30 blur-3xl" />
+      <div className="relative mx-auto grid max-w-[1440px] gap-8 px-6 py-16 md:grid-cols-2 md:gap-12 md:px-10 md:py-20">
         <div className="flex flex-col justify-center">
-          <span className="inline-flex w-fit items-center rounded-full border border-white/15 bg-white/5 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-white/80 backdrop-blur">
+          <motion.span variants={fadeUp} className="inline-flex w-fit items-center rounded-full border border-white/15 bg-white/5 px-4 py-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-white/80 backdrop-blur">
             The Solution
-          </span>
-          <h2 className="mt-3 text-2xl font-black leading-[1.05] tracking-tight md:text-4xl">
+          </motion.span>
+          <motion.h2 variants={fadeUp} className="mt-4 text-2xl font-black leading-[1.05] tracking-tight md:text-4xl">
             Meet Suraj Ishwar's<br />Theft Shield
-          </h2>
-          <p className="mt-3 max-w-md text-sm text-white/70 md:text-base">
+          </motion.h2>
+          <motion.p variants={fadeUp} className="mt-4 max-w-lg text-white/70 text-sm md:text-base">
             An all-in-one smart bike security system — engineered to detect, alert,
             block and protect your two-wheeler 24/7.
-          </p>
+          </motion.p>
 
-          <div className="mt-6 grid grid-cols-3 gap-3">
+          <div className="mt-8 grid grid-cols-3 gap-4">
             {features.map((f) => (
-              <div key={f.label} className="flex flex-col items-center text-center">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-white/5">
-                  <f.icon className="h-4 w-4" />
+              <motion.div key={f.label} variants={fadeUp} className="flex flex-col items-center text-center">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full border border-white/15 bg-white/5">
+                  <f.icon className="h-5 w-5" />
                 </div>
-                <div className="mt-2 whitespace-pre-line text-[10px] font-medium leading-tight text-white/85">
+                <div className="mt-2 whitespace-pre-line text-[10px] font-medium leading-tight text-white/85 md:text-xs">
                   {f.label}
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
 
-        <div className="relative">
+        <motion.div variants={fadeUp} className="relative">
           <div className="absolute inset-0 -z-10 mx-auto h-full w-3/4 rounded-full bg-[oklch(0.7_0.08_75)]/15 blur-3xl" />
           <img
             src={deviceImg}
@@ -319,25 +252,25 @@ function SolutionSection() {
             loading="lazy"
             className="mx-auto w-full max-w-xs md:max-w-sm"
           />
-        </div>
+        </motion.div>
       </div>
 
-      <div className="relative mx-auto max-w-7xl px-5 pb-10 md:px-8">
-        <div className="grid grid-cols-3 gap-2 rounded-2xl bg-white/95 p-2 text-foreground shadow-2xl sm:divide-x sm:divide-foreground/10">
+      <div className="relative mx-auto max-w-[1440px] px-6 pb-16 md:px-10">
+        <div className="grid grid-cols-3 gap-2 rounded-2xl bg-white/95 p-3 text-foreground shadow-xl sm:divide-x sm:divide-foreground/10">
           {[
             { icon: ShieldCheck, value: "95%", label: "theft risk reduction" },
             { icon: Check, value: "2-Year", label: "Warranty" },
             { icon: Users, value: "1,500+", label: "riders protected" },
           ].map((s) => (
-            <div key={s.label} className="flex items-center gap-2 px-2 py-2 sm:px-4">
-              <div className="hidden h-9 w-9 items-center justify-center rounded-lg bg-foreground/5 sm:flex">
+            <motion.div key={s.label} variants={fadeUp} className="flex items-center gap-3 px-3 py-3 sm:px-6">
+              <div className="hidden h-10 w-10 items-center justify-center rounded-lg bg-foreground/5 sm:flex">
                 <s.icon className="h-4 w-4" />
               </div>
               <div>
-                <div className="text-base font-bold tracking-tight md:text-xl">{s.value}</div>
+                <div className="text-lg font-bold tracking-tight md:text-xl">{s.value}</div>
                 <div className="text-[10px] leading-tight text-muted-foreground md:text-xs">{s.label}</div>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
@@ -356,29 +289,31 @@ const FEATURES = [
 
 function FeaturesGrid() {
   return (
-    <Section id="features" className="bg-background">
-      <div className="mx-auto max-w-7xl px-5 py-12 md:px-8 md:py-16">
-        <div className="mx-auto max-w-2xl text-center">
-          <Tag>Engineered Inside</Tag>
-          <h2 className="mt-3 text-2xl font-black tracking-tight md:text-4xl">
+    <Section id="features" stagger className="bg-background">
+      <div className="mx-auto max-w-[1440px] px-6 py-16 md:px-10 md:py-20">
+        <div className="mx-auto max-w-3xl text-center">
+          <Tag className="scale-90">Engineered Inside</Tag>
+          <motion.h2 variants={fadeUp} className="mt-4 text-2xl font-black tracking-tight md:text-4xl">
             Every feature, obsessed over.
-          </h2>
-          <p className="mt-2 text-sm text-muted-foreground">
+          </motion.h2>
+          <motion.p variants={fadeUp} className="mt-3 text-sm text-muted-foreground md:text-base">
             Six layers of intelligent protection working together — silently, around the clock.
-          </p>
+          </motion.p>
         </div>
-        <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {FEATURES.map((f) => (
-            <div
+            <motion.div
               key={f.title}
-              className="group rounded-2xl bg-card p-4 shadow-[var(--shadow-card)] ring-1 ring-foreground/5 transition hover:-translate-y-1 hover:shadow-[var(--shadow-soft)]"
+              variants={fadeUp}
+              whileHover={{ y: -5, transition: { duration: 0.3 } }}
+              className="group rounded-2xl bg-card p-5 shadow-[var(--shadow-card)] ring-1 ring-foreground/5 transition hover:shadow-[var(--shadow-soft)]"
             >
-              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-foreground text-background transition group-hover:bg-[var(--gold)] group-hover:text-foreground">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-foreground text-background transition group-hover:bg-[var(--gold)] group-hover:text-foreground">
                 <f.icon className="h-4 w-4" />
               </div>
-              <h3 className="mt-3 text-sm font-bold">{f.title}</h3>
-              <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{f.desc}</p>
-            </div>
+              <h3 className="mt-4 text-base font-bold">{f.title}</h3>
+              <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{f.desc}</p>
+            </motion.div>
           ))}
         </div>
       </div>
@@ -395,21 +330,21 @@ function ComparisonSection() {
   ];
   const cols = ["Handle Lock", "Disc Lock", "Chain Lock", "Theft Shield"];
   return (
-    <Section id="compare" className="bg-card/50">
-      <div className="mx-auto max-w-6xl px-5 py-12 md:px-8 md:py-16">
-        <div className="mx-auto max-w-2xl text-center">
-          <Tag>The Difference</Tag>
-          <h2 className="mt-3 text-2xl font-black tracking-tight md:text-4xl">
+    <Section id="compare" stagger className="bg-card/50">
+      <div className="mx-auto max-w-[1440px] px-6 py-16 md:px-10 md:py-20">
+        <div className="mx-auto max-w-3xl text-center">
+          <Tag className="scale-90">The Difference</Tag>
+          <motion.h2 variants={fadeUp} className="mt-4 text-2xl font-black tracking-tight md:text-4xl">
             Why basic locks fail.
-          </h2>
+          </motion.h2>
         </div>
-        <div className="mt-6 overflow-hidden rounded-2xl bg-background shadow-[var(--shadow-soft)] ring-1 ring-foreground/5">
+        <motion.div variants={fadeUp} className="mt-8 overflow-hidden rounded-2xl bg-background shadow-[var(--shadow-soft)] ring-1 ring-foreground/5">
           <div className="grid grid-cols-5 border-b border-foreground/10 bg-foreground/[0.03] text-[10px] font-semibold uppercase tracking-wider md:text-xs">
-            <div className="p-2.5 text-foreground/70 md:p-3">Feature</div>
+            <div className="p-3 text-foreground/70 md:p-5">Feature</div>
             {cols.map((c, i) => (
               <div
                 key={c}
-                className={`p-2.5 text-center md:p-3 ${
+                className={`p-3 text-center md:p-5 ${
                   i === cols.length - 1 ? "bg-foreground text-background" : "text-foreground/70"
                 }`}
               >
@@ -419,11 +354,11 @@ function ComparisonSection() {
           </div>
           {rows.map((r) => (
             <div key={r.feature} className="grid grid-cols-5 border-b border-foreground/5 last:border-0">
-              <div className="p-2.5 text-xs font-medium md:p-3 md:text-sm">{r.feature}</div>
+              <div className="p-3 text-xs font-medium md:p-5 md:text-sm">{r.feature}</div>
               {r.v.map((ok, i) => (
                 <div
                   key={i}
-                  className={`flex items-center justify-center p-2.5 md:p-3 ${
+                  className={`flex items-center justify-center p-3 md:p-5 ${
                     i === r.v.length - 1 ? "bg-foreground/[0.03]" : ""
                   }`}
                 >
@@ -436,7 +371,7 @@ function ComparisonSection() {
               ))}
             </div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </Section>
   );
@@ -450,18 +385,20 @@ function BenefitsSection() {
     { title: "Universal fit", desc: "Compatible with every two-wheeler in India." },
   ];
   return (
-    <Section className="bg-background">
-      <div className="mx-auto max-w-7xl px-5 py-12 md:px-8 md:py-16">
+    <Section stagger className="bg-background">
+      <div className="mx-auto max-w-[1440px] px-6 py-16 md:px-10 md:py-20">
         <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
           {items.map((b, i) => (
-            <div
+            <motion.div
               key={b.title}
-              className="rounded-2xl border border-foreground/10 bg-card p-4"
+              variants={fadeUp}
+              whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
+              className="rounded-2xl border border-foreground/10 bg-card p-5"
             >
-              <div className="text-xs font-mono text-muted-foreground">0{i + 1}</div>
+              <div className="text-[10px] font-mono text-muted-foreground">0{i + 1}</div>
               <h3 className="mt-2 text-sm font-bold tracking-tight md:text-base">{b.title}</h3>
-              <p className="mt-1 text-xs text-muted-foreground">{b.desc}</p>
-            </div>
+              <p className="mt-1 text-[11px] text-muted-foreground">{b.desc}</p>
+            </motion.div>
           ))}
         </div>
       </div>
@@ -489,36 +426,38 @@ const TESTIMONIALS = [
 
 function ReviewsSection() {
   return (
-    <Section id="reviews" className="bg-card/40">
-      <div className="mx-auto max-w-7xl px-5 py-12 md:px-8 md:py-16">
+    <Section id="reviews" stagger className="bg-card/40">
+      <div className="mx-auto max-w-7xl px-5 py-10 md:px-8 md:py-14">
         <div className="mx-auto max-w-2xl text-center">
-          <Tag>Real Riders</Tag>
-          <h2 className="mt-3 text-2xl font-black tracking-tight md:text-4xl">
+          <Tag className="scale-90">Real Riders</Tag>
+          <motion.h2 variants={fadeUp} className="mt-2 text-xl font-black tracking-tight md:text-3xl">
             Loved across India.
-          </h2>
-          <div className="mt-3 flex items-center justify-center gap-1 text-foreground">
+          </motion.h2>
+          <motion.div variants={fadeUp} className="mt-2 flex items-center justify-center gap-1 text-foreground">
             {Array.from({ length: 5 }).map((_, i) => (
-              <Star key={i} className="h-4 w-4 fill-current" />
+              <Star key={i} className="h-3.5 w-3.5 fill-current" />
             ))}
-            <span className="ml-2 text-xs font-semibold md:text-sm">4.9 / 5 from 1,200+ reviews</span>
-          </div>
+            <span className="ml-2 text-[10px] font-semibold md:text-xs">4.9 / 5 from 1,200+ reviews</span>
+          </motion.div>
         </div>
         <div className="mt-6 grid gap-3 md:grid-cols-3">
           {TESTIMONIALS.map((t) => (
-            <div
+            <motion.div
               key={t.name}
-              className="rounded-2xl bg-background p-4 shadow-[var(--shadow-card)] ring-1 ring-foreground/5"
+              variants={fadeUp}
+              whileHover={{ y: -5, transition: { duration: 0.2 } }}
+              className="rounded-xl bg-background p-4 shadow-[var(--shadow-card)] ring-1 ring-foreground/5"
             >
               <div className="flex gap-1 text-foreground">
                 {Array.from({ length: 5 }).map((_, i) => (
                   <Star key={i} className="h-3 w-3 fill-current" />
                 ))}
               </div>
-              <p className="mt-2 text-xs leading-relaxed text-foreground/80">"{t.text}"</p>
-              <div className="mt-3 text-xs font-semibold">
+              <p className="mt-2 text-[11px] leading-relaxed text-foreground/80">"{t.text}"</p>
+              <div className="mt-3 text-[10px] font-semibold">
                 {t.name} <span className="font-normal text-muted-foreground">· {t.city}</span>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
@@ -558,21 +497,23 @@ function OfferSection() {
     },
   ];
   return (
-    <Section id="offer" className="relative overflow-hidden">
+    <Section id="offer" stagger className="relative overflow-hidden">
       <div className="absolute inset-0 -z-10" style={{ background: "var(--gradient-beige)" }} />
       <div className="mx-auto max-w-7xl px-5 py-12 md:px-8 md:py-16">
         <div className="mx-auto max-w-2xl text-center">
-          <Tag>Limited Launch Offer</Tag>
-          <h2 className="mt-3 text-2xl font-black tracking-tight md:text-4xl">
+          <Tag className="scale-90">Limited Launch Offer</Tag>
+          <motion.h2 variants={fadeUp} className="mt-2 text-2xl font-black tracking-tight md:text-4xl">
             Pick your protection.
-          </h2>
+          </motion.h2>
         </div>
 
         <div className="mt-8 grid gap-4 md:grid-cols-2">
           {products.map((p) => (
-            <div
+            <motion.div
               key={p.name}
-              className={`relative overflow-hidden rounded-2xl p-4 shadow-[var(--shadow-soft)] ring-1 transition hover:-translate-y-1 md:p-5 ${
+              variants={fadeUp}
+              whileHover={{ y: -8, transition: { duration: 0.3 } }}
+              className={`relative overflow-hidden rounded-2xl p-4 shadow-[var(--shadow-soft)] ring-1 transition md:p-6 ${
                 p.highlight
                   ? "bg-[var(--dark-bg)] text-[oklch(0.97_0.01_80)] ring-foreground/20"
                   : "bg-card text-foreground ring-foreground/10"
@@ -580,17 +521,17 @@ function OfferSection() {
             >
               <div className="flex items-center justify-between">
                 <span
-                  className={`rounded-full px-2.5 py-0.5 text-[9px] font-semibold uppercase tracking-widest ${
+                  className={`rounded-full px-2 py-0.5 text-[8px] font-semibold uppercase tracking-widest ${
                     p.highlight ? "bg-[var(--gold)] text-foreground" : "bg-foreground text-background"
                   }`}
                 >
                   {p.tag}
                 </span>
                 <div className="text-right">
-                  <div className={`text-[10px] line-through ${p.highlight ? "text-white/50" : "text-muted-foreground"}`}>
+                  <div className={`text-[9px] line-through ${p.highlight ? "text-white/50" : "text-muted-foreground"}`}>
                     {p.old}
                   </div>
-                  <div className="text-xl font-black tracking-tight md:text-2xl">{p.price}</div>
+                  <div className="text-lg font-black tracking-tight md:text-xl">{p.price}</div>
                 </div>
               </div>
               <div className="mt-3 flex h-32 items-center justify-center overflow-hidden rounded-xl bg-white/5 md:h-40">
@@ -599,7 +540,7 @@ function OfferSection() {
               <h3 className="mt-3 text-base font-bold tracking-tight md:text-lg">{p.name}</h3>
               <ul className="mt-2 space-y-1">
                 {p.perks.map((perk) => (
-                  <li key={perk} className={`flex items-center gap-2 text-xs ${p.highlight ? "text-white/85" : "text-foreground/80"}`}>
+                  <li key={perk} className={`flex items-center gap-2 text-[11px] ${p.highlight ? "text-white/85" : "text-foreground/80"}`}>
                     <Check className="h-3 w-3 shrink-0" /> {perk}
                   </li>
                 ))}
@@ -609,7 +550,7 @@ function OfferSection() {
                   href={`${waLink}&text=${encodeURIComponent("I want to order " + p.name)}`}
                   target="_blank"
                   rel="noreferrer"
-                  className={`inline-flex flex-1 items-center justify-center gap-2 rounded-full px-4 py-2.5 text-xs font-semibold transition hover:opacity-90 ${
+                  className={`inline-flex flex-1 items-center justify-center gap-2 rounded-full px-4 py-2.5 text-[11px] font-semibold transition hover:opacity-90 ${
                     p.highlight
                       ? "bg-white text-foreground"
                       : "bg-foreground text-background"
@@ -621,7 +562,7 @@ function OfferSection() {
                   href={waLink}
                   target="_blank"
                   rel="noreferrer"
-                  className={`inline-flex items-center justify-center gap-2 rounded-full border px-4 py-2.5 text-xs font-semibold transition ${
+                  className={`inline-flex items-center justify-center gap-2 rounded-full border px-4 py-2.5 text-[11px] font-semibold transition ${
                     p.highlight
                       ? "border-white/30 text-white hover:bg-white/10"
                       : "border-foreground/20 hover:bg-foreground/5"
@@ -630,7 +571,7 @@ function OfferSection() {
                   <MessageCircle className="h-3.5 w-3.5" /> Chat
                 </a>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
 
@@ -641,18 +582,20 @@ function OfferSection() {
             { icon: ShieldCheck, t: "Lifetime Support", d: "We're always a call away" },
             { icon: MessageCircle, t: "WhatsApp Community", d: "Join 1,500+ riders" },
           ].map((b) => (
-            <div
+            <motion.div
               key={b.t}
-              className="flex items-center gap-2 rounded-xl bg-card/80 p-2.5 ring-1 ring-foreground/5 backdrop-blur"
+              variants={fadeUp}
+              whileHover={{ y: -3, transition: { duration: 0.2 } }}
+              className="flex items-center gap-2 rounded-xl bg-card/80 p-2 ring-1 ring-foreground/5 backdrop-blur"
             >
-              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-foreground text-background">
-                <b.icon className="h-3.5 w-3.5" />
+              <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-foreground text-background">
+                <b.icon className="h-3 w-3" />
               </div>
               <div className="leading-tight">
-                <div className="text-xs font-semibold">{b.t}</div>
-                <div className="text-[10px] text-muted-foreground">{b.d}</div>
+                <div className="text-[11px] font-semibold">{b.t}</div>
+                <div className="text-[9px] text-muted-foreground">{b.d}</div>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
@@ -662,22 +605,22 @@ function OfferSection() {
 
 function FinalCTA() {
   return (
-    <Section className="bg-[var(--dark-bg)] text-[oklch(0.97_0.01_80)]">
-      <div className="mx-auto max-w-4xl px-5 py-14 text-center md:px-8 md:py-20">
-        <Tag>
+    <Section stagger className="bg-[var(--dark-bg)] text-[oklch(0.97_0.01_80)]">
+      <div className="mx-auto max-w-4xl px-5 py-12 text-center md:px-8 md:py-16">
+        <Tag className="scale-90">
           <span className="text-foreground">Don't wait until it's gone</span>
         </Tag>
-        <h2 className="mt-4 text-3xl font-black leading-[1.05] tracking-tight md:text-5xl">
+        <motion.h2 variants={fadeUp} className="mt-4 text-2xl font-black leading-[1.05] tracking-tight md:text-4xl">
           Protect Your Bike Today.
-        </h2>
-        <p className="mx-auto mt-3 max-w-lg text-sm text-white/70">
+        </motion.h2>
+        <motion.p variants={fadeUp} className="mx-auto mt-3 max-w-lg text-xs text-white/70 md:text-sm">
           Join 1,500+ riders across India who sleep peacefully knowing Theft Shield
           is on guard.
-        </p>
-        <div className="mt-6 flex flex-wrap justify-center gap-2">
+        </motion.p>
+        <motion.div variants={fadeUp} className="mt-6 flex flex-wrap justify-center gap-2">
           <a
             href="#offer"
-            className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 text-xs font-semibold text-foreground transition hover:opacity-90 md:text-sm"
+            className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-[11px] font-semibold text-foreground transition hover:opacity-90 md:text-xs"
           >
             Buy Now <ArrowRight className="h-3.5 w-3.5" />
           </a>
@@ -685,88 +628,13 @@ function FinalCTA() {
             href={waLink}
             target="_blank"
             rel="noreferrer"
-            className="inline-flex items-center gap-2 rounded-full border border-white/25 px-5 py-3 text-xs font-semibold text-white transition hover:bg-white/10 md:text-sm"
+            className="inline-flex items-center gap-2 rounded-full border border-white/25 px-5 py-2.5 text-[11px] font-semibold text-white transition hover:bg-white/10 md:text-xs"
           >
             <MessageCircle className="h-3.5 w-3.5" /> WhatsApp +91 8698521649
           </a>
-        </div>
+        </motion.div>
       </div>
     </Section>
-  );
-}
-
-function Footer() {
-  return (
-    <footer className="border-t border-foreground/10 bg-card/50">
-      <div className="mx-auto grid max-w-7xl gap-10 px-5 py-14 md:grid-cols-4 md:px-8">
-        <div className="md:col-span-2">
-          <img src={logo} alt="Gadget Dash" className="h-14 w-auto" />
-          <p className="mt-4 max-w-sm text-sm text-muted-foreground">
-            Premium smart bike security, built in India by Suraj Ishwar. Stay one
-            step ahead of thieves.
-          </p>
-        </div>
-        <div>
-          <div className="text-sm font-semibold">Contact</div>
-          <ul className="mt-4 space-y-3 text-sm text-muted-foreground">
-            <li className="flex items-center gap-2">
-              <Phone className="h-4 w-4" /> +91 8698521649
-            </li>
-            <li className="flex items-center gap-2">
-              <Mail className="h-4 w-4" /> hello@gadgetdash.in
-            </li>
-            <li className="flex items-center gap-2">
-              <MessageCircle className="h-4 w-4" />{" "}
-              <a href={waLink} target="_blank" rel="noreferrer" className="hover:text-foreground">
-                Chat on WhatsApp
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div>
-          <div className="text-sm font-semibold">Company</div>
-          <ul className="mt-4 space-y-3 text-sm text-muted-foreground">
-            <li><a href="#features" className="hover:text-foreground">Features</a></li>
-            <li><a href="#offer" className="hover:text-foreground">Pricing</a></li>
-            <li><a href="#reviews" className="hover:text-foreground">Reviews</a></li>
-            <li><a href="#" className="hover:text-foreground">Privacy Policy</a></li>
-            <li><a href="#" className="hover:text-foreground">Refund Policy</a></li>
-          </ul>
-          <div className="mt-5 flex gap-3">
-            <a href="#" aria-label="Instagram" className="rounded-full border border-foreground/15 p-2 hover:bg-foreground/5">
-              <Share2 className="h-4 w-4" />
-            </a>
-            <a href="#" aria-label="Website" className="rounded-full border border-foreground/15 p-2 hover:bg-foreground/5">
-              <Globe2 className="h-4 w-4" />
-            </a>
-          </div>
-        </div>
-      </div>
-      <div className="border-t border-foreground/10 py-5 text-center text-xs text-muted-foreground">
-        © {new Date().getFullYear()} Gadget Dash by Suraj Ishwar · Made in India
-      </div>
-    </footer>
-  );
-}
-
-function MobileStickyCTA() {
-  return (
-    <div className="fixed inset-x-0 bottom-0 z-40 flex gap-2 border-t border-foreground/10 bg-background/90 p-3 backdrop-blur-xl md:hidden">
-      <a
-        href="#offer"
-        className="flex-1 rounded-full bg-foreground py-3 text-center text-sm font-semibold text-background"
-      >
-        Buy Now
-      </a>
-      <a
-        href={waLink}
-        target="_blank"
-        rel="noreferrer"
-        className="flex items-center justify-center gap-2 rounded-full border border-foreground/15 px-5 py-3 text-sm font-semibold"
-      >
-        <MessageCircle className="h-4 w-4" /> Chat
-      </a>
-    </div>
   );
 }
 
