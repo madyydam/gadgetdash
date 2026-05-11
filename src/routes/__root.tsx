@@ -71,7 +71,7 @@ function DoorReveal() {
     <motion.div
       initial={{ opacity: 1 }}
       animate={{ opacity: 0 }}
-      transition={{ duration: 0.1, delay: 1.2 }}
+      transition={{ duration: 0.1, delay: 2.5 }}
       onAnimationComplete={() => {
         document.body.style.overflow = "auto";
       }}
